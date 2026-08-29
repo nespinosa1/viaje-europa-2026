@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Viaje Europa 2026 — Itinerario</title>
+<style>
+  :root{
+    --navy:#1a2b4c;
+    --navy-light:#2c4270;
+    --accent:#c9a24b;
+    --sky:#4285f4;
+    --border:#dfe3ea;
+    --text:#1f2430;
+    --muted:#6b7280;
+    --amber-bg:#fff8ec;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:'Segoe UI', Helvetica, Arial, sans-serif;
+    background:#f6f7fb;
+    margin:0;
+    padding:0 0 60px;
+    color:var(--text);
+  }
+  .hero{
+    background:linear-gradient(135deg,var(--navy),var(--navy-light));
+    color:#fff;
+    padding:48px 24px 40px;
+    text-align:center;
+  }
+  .hero h1{margin:0 0 8px;font-size:30px;letter-spacing:.3px;}
+  .hero p{margin:0;color:#cdd7f0;font-size:15px;}
+  .hero .dates{
+    display:inline-block;
+    margin-top:18px;
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.28);
+    border-radius:999px;
+    padding:8px 22px;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:.3px;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px;}
+  .section{margin-top:32px;}
+  .card{
+    background:#fff;
+    border-radius:14px;
+    border:1px solid var(--border);
+    box-shadow:0 2px 10px rgba(20,20,40,0.06);
+    padding:24px 26px;
+  }
+  h2.section-title{
+    color:var(--navy);
+    font-size:19px;
+    margin:0 0 16px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  /* Route overview */
+  .route-flow{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:0;
+    margin-bottom:20px;
+  }
+  .route-stop{
+    background:#f7f8fb;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:8px 14px;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--navy);
+    white-space:nowrap;
+  }
+  .route-arrow{color:var(--muted);font-size:13px;padding:0 8px;white-space:nowrap;}
+  .route-arrow.flight{color:var(--sky);font-weight:700;}
+
+  .maps-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--sky);
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+    font-size:14.5px;
+    padding:13px 22px;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(66,133,244,0.35);
+  }
+
+  .map-diagram{
+    margin-top:18px;
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid var(--border);
+    background:#eef4fb;
+  }
+  .map-diagram svg{display:block;width:100%;height:auto;}
+  .map-note{font-size:12px;color:var(--muted);margin-top:8px;}
+
+  .stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px;}
+  .stat-box{flex:1;min-width:130px;background:#f7f8fb;border-radius:10px;padding:14px 16px;text-align:center;}
+  .stat-box b{display:block;font-size:20px;color:var(--navy);}
+  .stat-box span{font-size:12px;color:var(--muted);}
+
+  /* Timeline */
+  .timeline{position:relative;padding-left:28px;}
+  .timeline::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--border);}
+  .tl-item{position:relative;padding-bottom:22px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-dot{position:absolute;left:-28px;top:2px;width:18px;height:18px;border-radius:50%;background:var(--navy);border:3px solid #fff;box-shadow:0 0 0 1.5px var(--navy);}
+  .tl-dot.flight{background:var(--sky);box-shadow:0 0 0 1.5px var(--sky);}
+  .tl-dot.travel{background:var(--accent);box-shadow:0 0 0 1.5px var(--accent);}
+  .tl-date{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-transform:uppercase;}
+  .tl-city{font-size:16.5px;font-weight:700;color:var(--navy);margin:2px 0 4px;}
+  .tl-detail{font-size:13.5px;color:var(--text);}
+  .tl-transit{display:inline-block;margin-top:6px;font-size:12px;background:#f0f4fa;color:var(--navy-light);padding:3px 10px;border-radius:6px;font-weight:600;}
+  .tl-transit.flight-tag{background:#e8f0fe;color:#1a56db;}
+
+  /* Notes */
+  .notes{background:var(--amber-bg);border-radius:12px;padding:18px 22px;font-size:13.5px;line-height:1.6;}
+  .notes ul{margin:8px 0 0;padding-left:18px;}
+  .notes li{margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <h1>✈️ Viaje Europa 2026</h1>
+    <p>Milán → Venecia → Pula → Liubliana → Split → Mostar → Dubrovnik → Roma</p>
+    <div class="dates">10 al 25 de octubre 2026 · 2 personas</div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- RUTA / MAPA -->
+    <div class="section card">
+      <h2 class="section-title">🗺️ Recorrido</h2>
+      <div class="route-flow">
+        <div class="route-stop">Milán</div>
+        <div class="route-arrow">🚆 →</div>
+        <div class="route-stop">Venecia</div>
+        <div class="route-arrow">🚌 →</div>
+        <div class="route-stop">Pula</div>
+        <div class="route-arrow">🚗 →</div>
+        <div class="route-stop">Liubliana</div>
+        <div class="route-arrow">🚗 →</div>
+        <div class="route-stop">Split</div>
+        <div class="route-arrow">🚗 →</div>
+        <div class="route-stop">Mostar</div>
+        <div class="route-arrow">🚗 →</div>
+        <div class="route-stop">Dubrovnik</div>
+        <div class="route-arrow flight">✈️ →</div>
+        <div class="route-stop">Roma</div>
+      </div>
+
+      <a class="maps-btn" href="https://www.google.com/maps/dir/Mil%C3%A1n,+Italia/Venecia,+Italia/Pula,+Croacia/Liubliana,+Eslovenia/Split,+Croacia/Mostar,+Bosnia+y+Herzegovina/Dubrovnik,+Croacia" target="_blank" rel="noopener">
+        📍 Abrir la ruta completa en Google Maps
+      </a>
+
+      <div class="map-diagram">
+        <svg viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg">
+          <rect width="700" height="480" fill="#eef4fb"/>
+          <text x="140" y="90" font-size="15" fill="#b9c6dc" font-weight="700">ITALIA</text>
+          <text x="430" y="55" font-size="15" fill="#b9c6dc" font-weight="700">ESLOVENIA</text>
+          <text x="520" y="230" font-size="15" fill="#b9c6dc" font-weight="700">CROACIA</text>
+          <text x="590" y="330" font-size="14" fill="#b9c6dc" font-weight="700">BOSNIA</text>
+          <text x="150" y="410" font-size="15" fill="#b9c6dc" font-weight="700">ITALIA</text>
+
+          <!-- ruta en auto/tren/bus -->
+          <polyline points="60,115 265,117 364,169 407,60 533,293 622,308 640,371"
+            fill="none" stroke="#1a2b4c" stroke-width="3" stroke-dasharray="0"/>
+
+          <!-- vuelo Dubrovnik -> Roma -->
+          <line x1="640" y1="371" x2="275" y2="440" stroke="#4285f4" stroke-width="2.5" stroke-dasharray="6,6"/>
+          <text x="440" y="420" font-size="20">✈️</text>
+
+          <!-- paradas -->
+          <g font-family="Segoe UI, sans-serif">
+            <circle cx="60" cy="115" r="8" fill="#1a2b4c"/>
+            <text x="60" y="98" font-size="13" font-weight="700" fill="#1a2b4c" text-anchor="middle">Milán</text>
+
+            <circle cx="265" cy="117" r="8" fill="#1a2b4c"/>
+            <text x="265" y="100" font-size="13" font-weight="700" fill="#1a2b4c" text-anchor="middle">Venecia</text>
+
+            <circle cx="364" cy="169" r="8" fill="#1a2b4c"/>
+            <text x="380" y="185" font-size="13" font-weight="700" fill="#1a2b4c">Pula</text>
+
+            <circle cx="407" cy="60" r="8" fill="#1a2b4c"/>
+            <text x="407" y="43" font-size="13" font-weight="700" fill="#1a2b4c" text-anchor="middle">Liubliana</text>
+
+            <circle cx="533" cy="293" r="8" fill="#1a2b4c"/>
+            <text x="533" y="276" font-size="13" font-weight="700" fill="#1a2b4c" text-anchor="middle">Split</text>
+
+            <circle cx="622" cy="308" r="8" fill="#1a2b4c"/>
+            <text x="622" y="292" font-size="13" font-weight="700" fill="#1a2b4c" text-anchor="middle">Mostar</text>
+
+            <circle cx="640" cy="371" r="9" fill="#c9a24b"/>
+            <text x="645" y="392" font-size="13" font-weight="700" fill="#1a2b4c">Dubrovnik</text>
+
+            <circle cx="275" cy="440" r="9" fill="#4285f4"/>
+            <text x="275" y="462" font-size="13" font-weight="700" fill="#1a56db" text-anchor="middle">Roma</text>
+          </g>
+        </svg>
+      </div>
+      <div class="map-note">Esquema del recorrido (no a escala geográfica exacta). Línea sólida = manejo/tren/bus, línea punteada = vuelo Dubrovnik–Roma. Para ver la ruta real, usá el botón de arriba.</div>
+
+      <div class="stats-row">
+        <div class="stat-box"><b>953 km</b><span>Manejando</span></div>
+        <div class="stat-box"><b>~11h30m</b><span>Horas al volante</span></div>
+        <div class="stat-box"><b>1 auto</b><span>Pula → Dubrovnik</span></div>
+        <div class="stat-box"><b>1 vuelo</b><span>Dubrovnik → Roma</span></div>
+      </div>
+    </div>
+
+    <!-- ITINERARIO DIA A DIA -->
+    <div class="section card">
+      <h2 class="section-title">📅 Día a día</h2>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">10 – 12 de octubre</div>
+          <div class="tl-city">Milán</div>
+          <div class="tl-detail">Airbnb: Via Lazzaro Spellanzani 6</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot travel"></div>
+          <div class="tl-date">13 de octubre</div>
+          <div class="tl-city">Venecia</div>
+          <div class="tl-detail">Hotel Rialto, Riva del Ferro 5149</div>
+          <div class="tl-transit">🚆 Tren MIL 09:35 → VEN 12:03 · 2h30m</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot travel"></div>
+          <div class="tl-date">14 de octubre</div>
+          <div class="tl-city">Pula</div>
+          <div class="tl-detail">Sin auto todavía — se retira al día siguiente</div>
+          <div class="tl-transit">🚌 FILS Bus VEN 11:00 → PUL 16:00 · 283 km · 5h</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot travel"></div>
+          <div class="tl-date">15 – 16 de octubre</div>
+          <div class="tl-city">Liubliana</div>
+          <div class="tl-detail">Retiro del auto en Pula (15/10)</div>
+          <div class="tl-transit">🚗 204 km · 2h21m</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot travel"></div>
+          <div class="tl-date">17 – 19 de octubre</div>
+          <div class="tl-city">Split</div>
+          <div class="tl-transit">🚗 440 km · 5h desde Liubliana</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot travel"></div>
+          <div class="tl-date">20 de octubre</div>
+          <div class="tl-city">Mostar</div>
+          <div class="tl-transit">🚗 169 km · 2h10m desde Split</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot travel"></div>
+          <div class="tl-date">21 – 22 de octubre</div>
+          <div class="tl-city">Dubrovnik</div>
+          <div class="tl-detail">Devolución del auto: Sixt Dubrovnik / Hotel Rixos, Liechtensteinov Put 3 — 21/10 a las 12:00 (BMW 1 Series confirmado)</div>
+          <div class="tl-transit">🚗 140 km · 2h desde Mostar</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot flight"></div>
+          <div class="tl-date">22 de octubre</div>
+          <div class="tl-city">✈️ Vuelo a Roma</div>
+          <div class="tl-detail">Ryanair FR5974 · DBV → FCO · Salida 22:35 · Llegada 23:55 · 1 valija de 23kg por persona</div>
+          <div class="tl-transit flight-tag">Día 22/10 completo libre en Dubrovnik antes del vuelo</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">23 – 25 de octubre</div>
+          <div class="tl-city">Roma</div>
+          <div class="tl-detail">Vuelo de regreso 25/10, 22:40hs (FCO–EZE)</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- NOTAS -->
+    <div class="section">
+      <div class="notes">
+        <b>📌 A tener en cuenta</b>
+        <ul>
+          <li>El auto se retira en Pula el 15/10 y se devuelve en Dubrovnik el 21/10 — no hace falta antes ni después de ese tramo.</li>
+          <li>El auto se devuelve en Sixt Dubrovnik/Hotel Rixos (Liechtensteinov Put 3), zona Gorica — a ~1,5-2km (15-25 min caminando) del Casco Antiguo. Al ser un hotel normal con acceso vehicular, no aplica el problema de calles peatonales que sí tiene el Casco Antiguo amurallado.</li>
+          <li>El Maratón de Liubliana es el fin de semana del 17-18/10 — no coincide con las fechas del viaje (15-16/10 en Liubliana), sin impacto.</li>
+          <li>Confirmado: el auto alquilado en Italia permite cruzar a Croacia y pasar por el corredor de Neum (Bosnia).</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
