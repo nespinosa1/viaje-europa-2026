@@ -112,7 +112,7 @@
   /* Timeline */
   .timeline{position:relative;padding-left:28px;}
   .timeline::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--border);}
-  .tl-item{position:relative;padding-bottom:22px;}
+  .tl-item{position:relative;padding-bottom:20px;}
   .tl-item:last-child{padding-bottom:0;}
   .tl-dot{position:absolute;left:-28px;top:2px;width:18px;height:18px;border-radius:50%;background:var(--navy);border:3px solid #fff;box-shadow:0 0 0 1.5px var(--navy);}
   .tl-dot.flight{background:var(--sky);box-shadow:0 0 0 1.5px var(--sky);}
@@ -122,6 +122,13 @@
   .tl-detail{font-size:13.5px;color:var(--text);}
   .tl-transit{display:inline-block;margin-top:6px;font-size:12px;background:#f0f4fa;color:var(--navy-light);padding:3px 10px;border-radius:6px;font-weight:600;}
   .tl-transit.flight-tag{background:#e8f0fe;color:#1a56db;}
+
+  /* Sub-días: puntos chicos para cada día intermedio en el mismo lugar */
+  .tl-subitem{position:relative;padding-bottom:16px;}
+  .tl-subitem:last-child{padding-bottom:0;}
+  .tl-subdot{position:absolute;left:-24px;top:4px;width:8px;height:8px;border-radius:50%;background:#c7cfdc;}
+  .tl-subdate{font-size:12px;color:var(--muted);}
+  .tl-subnote{font-size:12px;color:var(--navy-light);margin-left:6px;}
 
   /* Notes */
   .notes{background:var(--amber-bg);border-radius:12px;padding:18px 22px;font-size:13.5px;line-height:1.6;}
@@ -133,8 +140,8 @@
 
   <div class="hero">
     <h1>✈️ Viaje Europa 2026</h1>
-    <p>Milán → Venecia → Pula → Liubliana → Split → Mostar → Dubrovnik → Roma</p>
-    <div class="dates">10 al 25 de octubre 2026 · 2 personas</div>
+    <p>Buenos Aires → Milán → Venecia → Pula → Liubliana → Split → Mostar → Dubrovnik → Roma → Buenos Aires</p>
+    <div class="dates">10 al 26 de octubre 2026 · 2 personas</div>
   </div>
 
   <div class="wrap">
@@ -143,6 +150,8 @@
     <div class="section card">
       <h2 class="section-title">🗺️ Recorrido</h2>
       <div class="route-flow">
+        <div class="route-stop">Buenos Aires</div>
+        <div class="route-arrow flight">✈️ →</div>
         <div class="route-stop">Milán</div>
         <div class="route-arrow">🚆 →</div>
         <div class="route-stop">Venecia</div>
@@ -158,6 +167,8 @@
         <div class="route-stop">Dubrovnik</div>
         <div class="route-arrow flight">✈️ →</div>
         <div class="route-stop">Roma</div>
+        <div class="route-arrow flight">✈️ →</div>
+        <div class="route-stop">Buenos Aires</div>
       </div>
 
       <a class="maps-btn" href="https://www.google.com/maps/dir/Mil%C3%A1n,+Italia/Venecia,+Italia/Pula,+Croacia/Liubliana,+Eslovenia/Split,+Croacia/Mostar,+Bosnia+y+Herzegovina/Dubrovnik,+Croacia" target="_blank" rel="noopener">
@@ -225,11 +236,20 @@
       <div class="timeline">
 
         <div class="tl-item">
+          <div class="tl-dot flight"></div>
+          <div class="tl-date">10 de octubre</div>
+          <div class="tl-city">✈️ Salida desde Buenos Aires</div>
+          <div class="tl-detail">ITA Airways, reserva CELO9B · EZE (Ministro Pistarini, Terminal P) 01:30 → Roma Fiumicino (Terminal 3) 19:45 (AZ683) · Escala en Fiumicino 1h15m · Fiumicino (Terminal 1) 21:00 → Milán Linate 22:10 (AZ2058)</div>
+        </div>
+
+        <div class="tl-item">
           <div class="tl-dot"></div>
-          <div class="tl-date">10 – 12 de octubre</div>
+          <div class="tl-date">10 de octubre</div>
           <div class="tl-city">Milán</div>
           <div class="tl-detail">Airbnb: Via Lazzaro Spellanzani 6</div>
         </div>
+        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">11 de octubre</span></div>
+        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">12 de octubre</span></div>
 
         <div class="tl-item">
           <div class="tl-dot travel"></div>
@@ -249,18 +269,21 @@
 
         <div class="tl-item">
           <div class="tl-dot travel"></div>
-          <div class="tl-date">15 – 16 de octubre</div>
+          <div class="tl-date">15 de octubre</div>
           <div class="tl-city">Liubliana</div>
           <div class="tl-detail">Retiro del auto: Sixt Pula Estación Autobus, Trg 1. Istarske brigade 1, Pula — 15/10 a las 10:00 (BMW 1 Series automático, 5 asientos, 3 valijas)</div>
           <div class="tl-transit">🚗 204 km · 2h21m</div>
         </div>
+        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">16 de octubre</span></div>
 
         <div class="tl-item">
           <div class="tl-dot travel"></div>
-          <div class="tl-date">17 – 19 de octubre</div>
+          <div class="tl-date">17 de octubre</div>
           <div class="tl-city">Split</div>
           <div class="tl-transit">🚗 440 km · 5h desde Liubliana</div>
         </div>
+        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">18 de octubre</span></div>
+        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">19 de octubre</span></div>
 
         <div class="tl-item">
           <div class="tl-dot travel"></div>
@@ -271,25 +294,33 @@
 
         <div class="tl-item">
           <div class="tl-dot travel"></div>
-          <div class="tl-date">21 – 22 de octubre</div>
+          <div class="tl-date">21 de octubre</div>
           <div class="tl-city">Dubrovnik</div>
           <div class="tl-detail">Devolución del auto: Sixt Dubrovnik / Hotel Rixos, Liechtensteinov Put 3 — 21/10 a las 12:00 (BMW 1 Series confirmado)</div>
           <div class="tl-transit">🚗 140 km · 2h desde Mostar</div>
         </div>
+        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">22 de octubre</span><span class="tl-subnote">día libre antes del vuelo</span></div>
 
         <div class="tl-item">
           <div class="tl-dot flight"></div>
           <div class="tl-date">22 de octubre</div>
           <div class="tl-city">✈️ Vuelo a Roma</div>
           <div class="tl-detail">Ryanair FR5974 · DBV → FCO · Salida 22:35 · Llegada 23:55 · 1 valija de 23kg por persona</div>
-          <div class="tl-transit flight-tag">Día 22/10 completo libre en Dubrovnik antes del vuelo</div>
         </div>
 
         <div class="tl-item">
           <div class="tl-dot"></div>
-          <div class="tl-date">23 – 25 de octubre</div>
+          <div class="tl-date">23 de octubre</div>
           <div class="tl-city">Roma</div>
-          <div class="tl-detail">Vuelo de regreso 25/10, 22:40hs (FCO–EZE)</div>
+        </div>
+        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">24 de octubre</span></div>
+        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">25 de octubre</span><span class="tl-subnote">vuelo de regreso AZ680, 22:40hs (FCO)</span></div>
+
+        <div class="tl-item">
+          <div class="tl-dot flight"></div>
+          <div class="tl-date">26 de octubre</div>
+          <div class="tl-city">🏠 Llegada a Buenos Aires</div>
+          <div class="tl-detail">EZE (Ministro Pistarini, Terminal IA) 08:50 · Fin del viaje</div>
         </div>
 
       </div>
