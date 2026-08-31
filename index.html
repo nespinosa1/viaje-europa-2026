@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viaje Europa 2026 — Itinerario</title>
+<title>Itinerario Juan y Nico - Europa 26</title>
 <style>
   :root{
     --navy:#1a2b4c;
@@ -131,6 +131,47 @@
   .tl-subdate{font-size:12px;color:var(--muted);}
   .tl-subnote{font-size:12px;color:var(--navy-light);margin-left:6px;}
 
+  .tl-country{font-size:11.5px;color:var(--muted);font-weight:500;}
+
+  .tl-item.today, .tl-subitem.today{
+    background:var(--amber-bg);
+    border-radius:10px;
+    margin-left:-10px;
+    padding-left:10px;
+    padding-right:10px;
+  }
+  .today-badge{
+    display:inline-block;
+    background:var(--accent);
+    color:#fff;
+    font-size:10.5px;
+    font-weight:800;
+    letter-spacing:.4px;
+    border-radius:5px;
+    padding:2px 7px;
+    margin-left:8px;
+    vertical-align:middle;
+  }
+
+  .booking-codes{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px;}
+  .booking-codes div{
+    background:#f7f8fb;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px 16px;
+    font-size:13px;
+  }
+  .booking-codes b{display:block;color:var(--navy);font-size:15px;letter-spacing:.5px;}
+  .booking-codes span{color:var(--muted);font-size:11.5px;}
+
+  .updated-footer{
+    text-align:center;
+    font-size:12px;
+    color:var(--muted);
+    margin-top:28px;
+    padding-top:16px;
+  }
+
   /* Notes */
   .notes{background:var(--amber-bg);border-radius:12px;padding:18px 22px;font-size:13.5px;line-height:1.6;}
   .notes ul{margin:8px 0 0;padding-left:18px;}
@@ -163,7 +204,7 @@
 <body>
 
   <div class="hero">
-    <h1>✈️ Viaje Europa 2026</h1>
+    <h1>✈️ Itinerario Juan y Nico - Europa 26</h1>
     <p>Buenos Aires → Milán → Venecia → Pula → Liubliana → Split → Mostar → Dubrovnik → Roma → Buenos Aires</p>
     <div class="dates">10 al 26 de octubre 2026 · 2 personas</div>
   </div>
@@ -259,89 +300,89 @@
       <h2 class="section-title">📅 Día a día</h2>
       <div class="timeline">
 
-        <div class="tl-item">
+        <div class="tl-item" data-date="2026-10-10">
           <div class="tl-dot flight"></div>
           <div class="tl-date">10 de octubre</div>
           <div class="tl-city">✈️ Salida desde Buenos Aires</div>
           <div class="tl-detail">ITA Airways, reserva CELO9B · EZE (Ministro Pistarini, Terminal P) 01:30 → Roma Fiumicino (Terminal 3) 19:45 (AZ683) · Escala en Fiumicino 1h15m · Fiumicino (Terminal 1) 21:00 → Milán Linate 22:10 (AZ2058)</div>
         </div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-date="2026-10-10">
           <div class="tl-dot"></div>
           <div class="tl-date">10 de octubre</div>
-          <div class="tl-city">Milán</div>
+          <div class="tl-city">Milán <span class="tl-country">· Italia</span></div>
           <div class="tl-detail">Airbnb: Via Lazzaro Spellanzani 6</div>
         </div>
-        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">11 de octubre</span></div>
-        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">12 de octubre</span></div>
+        <div class="tl-subitem" data-date="2026-10-11"><div class="tl-subdot"></div><span class="tl-subdate">11 de octubre</span></div>
+        <div class="tl-subitem" data-date="2026-10-12"><div class="tl-subdot"></div><span class="tl-subdate">12 de octubre</span></div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-date="2026-10-13">
           <div class="tl-dot travel"></div>
           <div class="tl-date">13 de octubre</div>
-          <div class="tl-city">Venecia</div>
+          <div class="tl-city">Venecia <span class="tl-country">· Italia</span></div>
           <div class="tl-detail">Hotel Rialto, Riva del Ferro 5149</div>
           <div class="tl-transit">🚆 Tren MIL 09:35 → VEN 12:03 · 2h30m</div>
         </div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-date="2026-10-14">
           <div class="tl-dot travel"></div>
           <div class="tl-date">14 de octubre</div>
-          <div class="tl-city">Pula</div>
+          <div class="tl-city">Pula <span class="tl-country">· Croacia</span></div>
           <div class="tl-detail">Airbnb: Castropola ulica 54, Pula</div>
           <div class="tl-transit">🚌 FILS Bus VEN 11:00 → PUL 16:00 · 283 km · 5h</div>
         </div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-date="2026-10-15">
           <div class="tl-dot travel"></div>
           <div class="tl-date">15 de octubre</div>
-          <div class="tl-city">Liubliana</div>
+          <div class="tl-city">Liubliana <span class="tl-country">· Eslovenia</span></div>
           <div class="tl-detail">Retiro del auto: Sixt Pula Estación Autobus, Trg 1. Istarske brigade 1, Pula — 15/10 a las 10:00 (BMW 1 Series automático, 5 asientos, 3 valijas)</div>
           <div class="tl-transit">🚗 204 km · 2h21m</div>
         </div>
-        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">16 de octubre</span></div>
+        <div class="tl-subitem" data-date="2026-10-16"><div class="tl-subdot"></div><span class="tl-subdate">16 de octubre</span></div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-date="2026-10-17">
           <div class="tl-dot travel"></div>
           <div class="tl-date">17 de octubre</div>
-          <div class="tl-city">Split</div>
+          <div class="tl-city">Split <span class="tl-country">· Croacia</span></div>
           <div class="tl-detail">Airbnb: Glagoljaška ulica 9, Split</div>
           <div class="tl-transit">🚗 440 km · 5h desde Liubliana</div>
         </div>
-        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">18 de octubre</span></div>
-        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">19 de octubre</span></div>
+        <div class="tl-subitem" data-date="2026-10-18"><div class="tl-subdot"></div><span class="tl-subdate">18 de octubre</span></div>
+        <div class="tl-subitem" data-date="2026-10-19"><div class="tl-subdot"></div><span class="tl-subdate">19 de octubre</span></div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-date="2026-10-20">
           <div class="tl-dot travel"></div>
           <div class="tl-date">20 de octubre</div>
-          <div class="tl-city">Mostar</div>
+          <div class="tl-city">Mostar <span class="tl-country">· Bosnia y Herzegovina</span></div>
           <div class="tl-transit">🚗 169 km · 2h10m desde Split</div>
         </div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-date="2026-10-21">
           <div class="tl-dot travel"></div>
           <div class="tl-date">21 de octubre</div>
-          <div class="tl-city">Dubrovnik</div>
+          <div class="tl-city">Dubrovnik <span class="tl-country">· Croacia</span></div>
           <div class="tl-detail">Devolución del auto: Sixt Dubrovnik / Hotel Rixos, Liechtensteinov Put 3 — 21/10 a las 12:00 (BMW 1 Series confirmado)</div>
           <div class="tl-transit">🚗 140 km · 2h desde Mostar</div>
         </div>
-        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">22 de octubre</span><span class="tl-subnote">día libre antes del vuelo</span></div>
+        <div class="tl-subitem" data-date="2026-10-22"><div class="tl-subdot"></div><span class="tl-subdate">22 de octubre</span><span class="tl-subnote">día libre antes del vuelo</span></div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-date="2026-10-22">
           <div class="tl-dot flight"></div>
           <div class="tl-date">22 de octubre</div>
           <div class="tl-city">✈️ Vuelo a Roma</div>
           <div class="tl-detail">Ryanair FR5974 · DBV → FCO · Salida 22:35 · Llegada 23:55 · 1 valija de 23kg por persona</div>
         </div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-date="2026-10-23">
           <div class="tl-dot"></div>
           <div class="tl-date">23 de octubre</div>
-          <div class="tl-city">Roma</div>
+          <div class="tl-city">Roma <span class="tl-country">· Italia</span></div>
         </div>
-        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">24 de octubre</span></div>
-        <div class="tl-subitem"><div class="tl-subdot"></div><span class="tl-subdate">25 de octubre</span><span class="tl-subnote">vuelo de regreso AZ680, 22:40hs (FCO)</span></div>
+        <div class="tl-subitem" data-date="2026-10-24"><div class="tl-subdot"></div><span class="tl-subdate">24 de octubre</span></div>
+        <div class="tl-subitem" data-date="2026-10-25"><div class="tl-subdot"></div><span class="tl-subdate">25 de octubre</span><span class="tl-subnote">vuelo de regreso AZ680, 22:40hs (FCO)</span></div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-date="2026-10-26">
           <div class="tl-dot flight"></div>
           <div class="tl-date">26 de octubre</div>
           <div class="tl-city">🏠 Llegada a Buenos Aires</div>
@@ -351,19 +392,36 @@
       </div>
     </div>
 
-    <!-- NOTAS -->
-    <div class="section">
-      <div class="notes">
-        <b>📌 A tener en cuenta</b>
-        <ul>
-          <li>El auto se retira en Pula el 15/10 y se devuelve en Dubrovnik el 21/10 — no hace falta antes ni después de ese tramo.</li>
-          <li>El auto se devuelve en Sixt Dubrovnik/Hotel Rixos (Liechtensteinov Put 3), zona Gorica — a ~1,5-2km (15-25 min caminando) del Casco Antiguo. Al ser un hotel normal con acceso vehicular, no aplica el problema de calles peatonales que sí tiene el Casco Antiguo amurallado.</li>
-          <li>El Maratón de Liubliana es el fin de semana del 17-18/10 — no coincide con las fechas del viaje (15-16/10 en Liubliana), sin impacto.</li>
-          <li>Confirmado: el auto alquilado en Italia permite cruzar a Croacia y pasar por el corredor de Neum (Bosnia).</li>
-        </ul>
+    <!-- CODIGOS DE RESERVA -->
+    <div class="section card">
+      <h2 class="section-title">🎫 Códigos de reserva</h2>
+      <div class="booking-codes">
+        <div><b>CELO9B</b><span>Vuelo ida y vuelta — ITA Airways (EZE-MIL / FCO-EZE)</span></div>
+        <div><b>FR5974</b><span>Vuelo Dubrovnik → Roma — Ryanair</span></div>
+        <div><b>#9738571427</b><span>Auto Pula → Dubrovnik — Sixt</span></div>
       </div>
     </div>
 
+    <div class="updated-footer">Última actualización: 31 de agosto de 2026</div>
+
   </div>
+  <script>
+    (function(){
+      var now = new Date();
+      var y = now.getFullYear(), m = String(now.getMonth()+1).padStart(2,'0'), d = String(now.getDate()).padStart(2,'0');
+      var today = y + '-' + m + '-' + d;
+      var els = document.querySelectorAll('[data-date="' + today + '"]');
+      els.forEach(function(el){
+        el.classList.add('today');
+        var label = el.querySelector('.tl-city') || el.querySelector('.tl-subdate');
+        if (label) {
+          var badge = document.createElement('span');
+          badge.className = 'today-badge';
+          badge.textContent = 'HOY';
+          label.appendChild(badge);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
