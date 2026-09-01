@@ -19,6 +19,7 @@
 <meta name="theme-color" content="#1a2b4c">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a2b4c'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle'%3E%E2%9C%88%EF%B8%8F%3C/text%3E%3C/svg%3E">
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <style>
   :root{
     --navy:#1a2b4c;
@@ -132,7 +133,17 @@
     border:1px solid var(--border);
     background:#eef4fb;
   }
-  .map-diagram svg{display:block;width:100%;height:auto;}
+  #route-map{height:320px;width:100%;background:#eef4fb;}
+  .leaflet-tooltip.map-label{
+    background:#fff;
+    border:1px solid var(--border);
+    color:var(--navy);
+    font-weight:700;
+    font-size:12px;
+    font-family:'Segoe UI', Helvetica, Arial, sans-serif;
+    padding:2px 7px;
+    box-shadow:0 1px 4px rgba(20,20,40,0.12);
+  }
   .map-note{font-size:12px;color:var(--muted);margin-top:8px;}
 
   .stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px;}
@@ -261,48 +272,9 @@
       </a>
 
       <div class="map-diagram">
-        <svg viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema del recorrido por Europa">
-          <rect width="700" height="480" fill="#eef4fb"/>
-          <text x="140" y="90" font-size="15" fill="#b9c6dc" font-weight="700">ITALIA</text>
-          <text x="430" y="55" font-size="15" fill="#b9c6dc" font-weight="700">ESLOVENIA</text>
-          <text x="520" y="230" font-size="15" fill="#b9c6dc" font-weight="700">CROACIA</text>
-          <text x="590" y="330" font-size="14" fill="#b9c6dc" font-weight="700">BOSNIA</text>
-          <text x="150" y="410" font-size="15" fill="#b9c6dc" font-weight="700">ITALIA</text>
-
-          <polyline points="60,115 265,117 364,169 407,60 533,293 622,308 640,371"
-            fill="none" stroke="#1a2b4c" stroke-width="3" stroke-dasharray="0"/>
-
-          <line x1="640" y1="371" x2="275" y2="440" stroke="#4285f4" stroke-width="2.5" stroke-dasharray="6,6"/>
-          <text x="440" y="420" font-size="20">✈️</text>
-
-          <g font-family="Segoe UI, sans-serif">
-            <circle cx="60" cy="115" r="8" fill="#1a2b4c"/>
-            <text x="60" y="98" font-size="13" font-weight="700" fill="#1a2b4c" text-anchor="middle">Milán</text>
-
-            <circle cx="265" cy="117" r="8" fill="#1a2b4c"/>
-            <text x="265" y="100" font-size="13" font-weight="700" fill="#1a2b4c" text-anchor="middle">Venecia</text>
-
-            <circle cx="364" cy="169" r="8" fill="#1a2b4c"/>
-            <text x="380" y="185" font-size="13" font-weight="700" fill="#1a2b4c">Pula</text>
-
-            <circle cx="407" cy="60" r="8" fill="#1a2b4c"/>
-            <text x="407" y="43" font-size="13" font-weight="700" fill="#1a2b4c" text-anchor="middle">Liubliana</text>
-
-            <circle cx="533" cy="293" r="8" fill="#1a2b4c"/>
-            <text x="533" y="276" font-size="13" font-weight="700" fill="#1a2b4c" text-anchor="middle">Split</text>
-
-            <circle cx="622" cy="308" r="8" fill="#1a2b4c"/>
-            <text x="622" y="292" font-size="13" font-weight="700" fill="#1a2b4c" text-anchor="middle">Mostar</text>
-
-            <circle cx="640" cy="371" r="9" fill="#c9a24b"/>
-            <text x="645" y="392" font-size="13" font-weight="700" fill="#1a2b4c">Dubrovnik</text>
-
-            <circle cx="275" cy="440" r="9" fill="#4285f4"/>
-            <text x="275" y="462" font-size="13" font-weight="700" fill="#1a56db" text-anchor="middle">Roma</text>
-          </g>
-        </svg>
+        <div id="route-map"></div>
       </div>
-      <div class="map-note">Esquema del recorrido (no a escala geográfica exacta). Línea sólida = manejo/tren/bus, línea punteada = vuelo Dubrovnik–Roma. Para ver la ruta real, usá el botón de arriba.</div>
+      <div class="map-note">Mapa con las paradas del recorrido en auto/tren/bus. El tramo punteado (Dubrovnik–Roma) es en avión. Tocá "Abrir la ruta completa" para navegación real.</div>
 
       <div class="stats-row">
         <div class="stat-box"><b>953 km</b><span>Manejando</span></div>
@@ -328,6 +300,7 @@
 
   </div>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
     var CITY_COORDS = {
       'Milán': [45.4642, 9.1900],
@@ -414,6 +387,32 @@
       }
       routeFlow.appendChild(el);
     });
+
+    // ---------- MAPA REAL (Leaflet + OpenStreetMap, sin iframe) ----------
+    (function(){
+      if (typeof L === 'undefined') return; // sin conexión en la primera carga: se omite silenciosamente
+      var driveStops = ['Milán','Venecia','Pula','Liubliana','Split','Mostar','Dubrovnik'];
+      var map = L.map('route-map', {scrollWheelZoom:false});
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 18
+      }).addTo(map);
+
+      var driveCoords = driveStops.map(function(c){ return CITY_COORDS[c]; });
+      L.polyline(driveCoords, {color:'#1a2b4c', weight:3}).addTo(map);
+      L.polyline([CITY_COORDS['Dubrovnik'], CITY_COORDS['Roma']], {color:'#4285f4', weight:2.5, dashArray:'6,8'}).addTo(map);
+
+      driveStops.concat(['Roma']).forEach(function(city){
+        var isFlightNode = (city === 'Dubrovnik' || city === 'Roma');
+        L.circleMarker(CITY_COORDS[city], {
+          radius:7, color:'#fff', weight:2,
+          fillColor: isFlightNode ? '#4285f4' : '#1a2b4c', fillOpacity:1
+        }).addTo(map).bindTooltip(city, {permanent:true, direction:'top', className:'map-label', offset:[0,-6]});
+      });
+
+      var bounds = L.latLngBounds(driveStops.concat(['Roma']).map(function(c){ return CITY_COORDS[c]; }));
+      map.fitBounds(bounds, {padding:[26,26]});
+    })();
 
     var timelineEl = document.getElementById('timeline');
     var monthNames = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
