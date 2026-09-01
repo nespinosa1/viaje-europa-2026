@@ -45,6 +45,19 @@
     padding:48px 24px 40px;
     text-align:center;
   }
+  .today-banner{
+    background:linear-gradient(135deg,var(--accent),#e3bd6f);
+    color:#332400;
+    text-align:center;
+    font-size:17px;
+    font-weight:800;
+    letter-spacing:.2px;
+    padding:14px 16px;
+  }
+  .today-banner strong{text-decoration:underline;text-decoration-color:rgba(51,36,0,0.35);}
+  @media (max-width:600px){
+    .today-banner{font-size:14.5px;padding:12px 14px;}
+  }
   .hero h1{margin:0 0 8px;font-size:30px;letter-spacing:.3px;}
   .hero p{margin:0;color:#cdd7f0;font-size:15px;}
   .hero .dates{
@@ -144,6 +157,11 @@
     padding:2px 7px;
     box-shadow:0 1px 4px rgba(20,20,40,0.12);
   }
+  .leaflet-tooltip.map-label-today{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
   .map-note{font-size:12px;color:var(--muted);margin-top:8px;}
 
   .stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px;}
@@ -234,6 +252,10 @@
 </style>
 </head>
 <body>
+
+  <div class="today-banner" id="today-banner">
+    <span aria-hidden="true">📍</span> <span id="today-banner-text">Cargando…</span>
+  </div>
 
   <div class="hero">
     <h1><span role="img" aria-label="avión">✈️</span> Itinerario Juan y Nico - Europa 26</h1>
@@ -342,6 +364,46 @@
         title:'Llegada a Buenos Aires', detail:'EZE (Ministro Pistarini, Terminal A) 08:50 · Fin del viaje'}
     ];
 
+    var CITY_COUNTRY = {
+      'Milán':'Italia','Venecia':'Italia','Pula':'Croacia','Liubliana':'Eslovenia',
+      'Split':'Croacia','Mostar':'Bosnia y Herzegovina','Dubrovnik':'Croacia',
+      'Roma':'Italia','Buenos Aires':'Argentina'
+    };
+    var TRIP_START = new Date(2026, 9, 10);
+    var TRIP_END = new Date(2026, 9, 25);
+
+    function getTodayInfo(){
+      var now = new Date();
+      var todayStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+      var match = DAYS.find(function(item){ return item.date === todayStr; });
+      var todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      var phase = todayMidnight < TRIP_START ? 'before' : (todayMidnight <= TRIP_END ? 'during' : 'after');
+      var city = match ? match.city : 'Buenos Aires';
+      return {
+        dateStr: todayStr,
+        city: city,
+        tz: match ? match.tz : 'America/Argentina/Buenos_Aires',
+        country: CITY_COUNTRY[city] || '',
+        phase: phase,
+        todayMidnight: todayMidnight
+      };
+    }
+    var TODAY_INFO = getTodayInfo();
+
+    // ---------- BANNER "DÓNDE ESTÁN HOY" ----------
+    (function(){
+      var el = document.getElementById('today-banner-text');
+      var msPerDay = 86400000;
+      if (TODAY_INFO.phase === 'before') {
+        var diff = Math.round((TRIP_START - TODAY_INFO.todayMidnight) / msPerDay);
+        el.textContent = 'El viaje empieza en ' + diff + (diff === 1 ? ' día' : ' días') + ' 🎒';
+      } else if (TODAY_INFO.phase === 'during') {
+        el.innerHTML = 'Hoy están en <strong>' + TODAY_INFO.city + '</strong>' + (TODAY_INFO.country ? ', ' + TODAY_INFO.country : '');
+      } else {
+        el.textContent = '¡Ya volvieron a Buenos Aires! Viaje terminado 🎉';
+      }
+    })();
+
     var routeFlow = document.getElementById('route-flow');
     ROUTE.forEach(function(step){
       var el = document.createElement('div');
@@ -371,10 +433,14 @@
 
       driveStops.concat(['Roma']).forEach(function(city){
         var isFlightNode = (city === 'Dubrovnik' || city === 'Roma');
+        var isToday = (city === TODAY_INFO.city);
         L.circleMarker(CITY_COORDS[city], {
-          radius:7, color:'#fff', weight:2,
-          fillColor: isFlightNode ? '#4285f4' : '#1a2b4c', fillOpacity:1
-        }).addTo(map).bindTooltip(city, {permanent:true, direction:'top', className:'map-label', offset:[0,-6]});
+          radius: isToday ? 11 : 7, color:'#fff', weight: isToday ? 3 : 2,
+          fillColor: isToday ? '#c9a24b' : (isFlightNode ? '#4285f4' : '#1a2b4c'), fillOpacity:1
+        }).addTo(map).bindTooltip(isToday ? '📍 ' + city + ' · HOY' : city, {
+          permanent:true, direction:'top', offset:[0,-8],
+          className: isToday ? 'map-label map-label-today' : 'map-label'
+        });
       });
 
       var bounds = L.latLngBounds(driveStops.concat(['Roma']).map(function(c){ return CITY_COORDS[c]; }));
@@ -411,11 +477,7 @@
     });
 
     (function(){
-      var now = new Date();
-      var y = now.getFullYear(), m = String(now.getMonth()+1).padStart(2,'0'), d = String(now.getDate()).padStart(2,'0');
-      var today = y + '-' + m + '-' + d;
-      var els = document.querySelectorAll('[data-date="' + today + '"]');
-      var todayTz = 'America/Argentina/Buenos_Aires', todayCity = 'Buenos Aires';
+      var els = document.querySelectorAll('[data-date="' + TODAY_INFO.dateStr + '"]');
       els.forEach(function(el){
         el.classList.add('today');
         var label = el.querySelector('.tl-city') || el.querySelector('.tl-subdate');
@@ -425,22 +487,19 @@
           badge.textContent = 'HOY';
           label.appendChild(badge);
         }
-        if (el.dataset.tz) { todayTz = el.dataset.tz; todayCity = el.dataset.city; }
       });
 
-      var tripStart = new Date(2026, 9, 10);
-      var tripEnd = new Date(2026, 9, 25);
-      var todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      var todayTz = TODAY_INFO.tz, todayCity = TODAY_INFO.city;
       var msPerDay = 86400000;
       var counterEl = document.getElementById('day-counter');
       var labelEl = document.getElementById('day-counter-label');
 
-      if (todayMidnight < tripStart) {
-        var diff = Math.round((tripStart - todayMidnight) / msPerDay);
+      if (TODAY_INFO.phase === 'before') {
+        var diff = Math.round((TRIP_START - TODAY_INFO.todayMidnight) / msPerDay);
         counterEl.textContent = '📅 ' + diff;
         labelEl.textContent = diff === 1 ? 'día para el viaje' : 'días para el viaje';
-      } else if (todayMidnight >= tripStart && todayMidnight <= tripEnd) {
-        var dayNum = Math.round((todayMidnight - tripStart) / msPerDay) + 1;
+      } else if (TODAY_INFO.phase === 'during') {
+        var dayNum = Math.round((TODAY_INFO.todayMidnight - TRIP_START) / msPerDay) + 1;
         counterEl.textContent = '📅 Día ' + dayNum + ' de 16';
         labelEl.textContent = 'del viaje';
       } else {
