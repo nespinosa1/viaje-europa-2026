@@ -334,7 +334,7 @@
     var DAYS = [
       {date:'2026-10-10', tz:'America/Argentina/Buenos_Aires', city:'Buenos Aires', type:'flight',
         title:'Salida desde Buenos Aires',
-        transit:'✈️ ITA Airways · EZE (Terminal A) 01:30 → Roma Fiumicino (T3) 19:45 · Escala 1h15m · Fiumicino (T1) 21:00 → Milán Linate 22:10'},
+        transit:'✈️ ITA Airways · EZE (Terminal A) 01:30 → Roma Fiumicino (T3) 19:45 (AZ683) · Escala 1h15m · Fiumicino (T1) 21:00 → Milán Linate 22:10 (AZ2058)'},
       {date:'2026-10-10', tz:'Europe/Rome', city:'Milán', country:'Italia', type:'stay',
         detail:'Airbnb: Via Lazzaro Spellanzani 6',
         address:'Via Lazzaro Spellanzani 6', addressQuery:'Via Lazzaro Spellanzani 6, Milano, Italia'},
@@ -368,9 +368,11 @@
         title:'Vuelo a Roma', transit:'✈️ Ryanair · DBV → FCO · Salida 22:35 · Llegada 23:55'},
       {date:'2026-10-23', tz:'Europe/Rome', city:'Roma', country:'Italia', type:'stay'},
       {date:'2026-10-24', tz:'Europe/Rome', city:'Roma', sub:true},
-      {date:'2026-10-25', tz:'Europe/Rome', city:'Roma', sub:true, note:'vuelo de regreso 22:40hs (FCO)'},
+      {date:'2026-10-25', tz:'Europe/Rome', city:'Roma', sub:true, note:'último día antes del vuelo'},
+      {date:'2026-10-25', tz:'Europe/Rome', city:'Roma', type:'flight',
+        title:'Vuelo a Buenos Aires', transit:'✈️ ITA Airways AZ680 · FCO → EZE · Salida 22:40'},
       {date:'2026-10-26', tz:'America/Argentina/Buenos_Aires', city:'Buenos Aires', type:'flight',
-        title:'Llegada a Buenos Aires', transit:'✈️ EZE (Terminal A) 08:50 · Fin del viaje'}
+        title:'🏠 Llegada a Buenos Aires', transit:'✈️ EZE (Terminal A) 08:50 · Fin del viaje'}
     ];
 
     var CITY_COUNTRY = {
