@@ -4,6 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Itinerario Juan y Nico - Europa 26</title>
+<meta name="description" content="Itinerario del viaje por Europa: Milán, Venecia, Pula, Liubliana, Split, Mostar, Dubrovnik y Roma. 10 al 26 de octubre 2026.">
+
+<!-- Open Graph / redes -->
+<meta property="og:title" content="Itinerario Juan y Nico - Europa 26">
+<meta property="og:description" content="Milán → Venecia → Pula → Liubliana → Split → Mostar → Dubrovnik → Roma. 10 al 26 de octubre 2026.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Itinerario Juan y Nico - Europa 26">
+<meta name="twitter:description" content="Milán → Venecia → Pula → Liubliana → Split → Mostar → Dubrovnik → Roma. 10 al 26 de octubre 2026.">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a2b4c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a2b4c'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle'%3E%E2%9C%88%EF%B8%8F%3C/text%3E%3C/svg%3E">
+
 <style>
   :root{
     --navy:#1a2b4c;
@@ -76,7 +91,6 @@
     gap:8px;
   }
 
-  /* Route overview */
   .route-flow{
     display:flex;
     flex-wrap:wrap;
@@ -126,7 +140,20 @@
   .stat-box b{display:block;font-size:20px;color:var(--navy);}
   .stat-box span{font-size:12px;color:var(--muted);}
 
-  /* Timeline */
+  .weather-box{
+    margin-top:18px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:#f0f4fa;
+    border-radius:10px;
+    padding:14px 18px;
+    font-size:13.5px;
+    color:var(--navy);
+  }
+  .weather-box .wtemp{font-size:24px;font-weight:700;}
+  .weather-box .wcity{color:var(--muted);font-size:12px;}
+
   .timeline{position:relative;padding-left:28px;}
   .timeline::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--border);}
   .tl-item{position:relative;padding-bottom:20px;}
@@ -140,7 +167,6 @@
   .tl-transit{display:inline-block;margin-top:6px;font-size:12px;background:#f0f4fa;color:var(--navy-light);padding:3px 10px;border-radius:6px;font-weight:600;}
   .tl-transit.flight-tag{background:#e8f0fe;color:#1a56db;}
 
-  /* Sub-días: puntos chicos para cada día intermedio en el mismo lugar */
   .tl-subitem{position:relative;padding-bottom:16px;}
   .tl-subitem:last-child{padding-bottom:0;}
   .tl-subdot{position:absolute;left:-24px;top:4px;width:8px;height:8px;border-radius:50%;background:#c7cfdc;}
@@ -169,16 +195,20 @@
     vertical-align:middle;
   }
 
-  .booking-codes{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px;}
-  .booking-codes div{
-    background:#f7f8fb;
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:10px 16px;
-    font-size:13px;
+  .checklist{list-style:none;margin:0;padding:0;}
+  .checklist li{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 4px;
+    border-bottom:1px solid var(--border);
+    font-size:14px;
   }
-  .booking-codes b{display:block;color:var(--navy);font-size:15px;letter-spacing:.5px;}
-  .booking-codes span{color:var(--muted);font-size:11.5px;}
+  .checklist li:last-child{border-bottom:none;}
+  .checklist input{width:18px;height:18px;accent-color:var(--navy);flex:none;}
+  .checklist label{cursor:pointer;flex:1;}
+  .checklist input:checked + label{color:var(--muted);text-decoration:line-through;}
+  .checklist-progress{font-size:12px;color:var(--muted);margin-bottom:12px;}
 
   .updated-footer{
     text-align:center;
@@ -187,13 +217,17 @@
     margin-top:28px;
     padding-top:16px;
   }
+  .offline-note{
+    text-align:center;
+    font-size:11.5px;
+    color:var(--muted);
+    margin-top:6px;
+  }
 
-  /* Notes */
   .notes{background:var(--amber-bg);border-radius:12px;padding:18px 22px;font-size:13.5px;line-height:1.6;}
   .notes ul{margin:8px 0 0;padding-left:18px;}
   .notes li{margin-bottom:6px;}
 
-  /* Responsive: pantallas chicas (celular) */
   @media (max-width: 600px){
     .hero{padding:32px 16px 28px;}
     .hero h1{font-size:23px;}
@@ -220,7 +254,7 @@
 <body>
 
   <div class="hero">
-    <h1>✈️ Itinerario Juan y Nico - Europa 26</h1>
+    <h1><span role="img" aria-label="avión">✈️</span> Itinerario Juan y Nico - Europa 26</h1>
     <p>Buenos Aires → Milán → Venecia → Pula → Liubliana → Split → Mostar → Dubrovnik → Roma → Buenos Aires</p>
     <div class="dates">10 al 26 de octubre 2026 · 2 personas</div>
     <div class="trip-status">
@@ -231,37 +265,16 @@
 
   <div class="wrap">
 
-    <!-- RUTA / MAPA -->
     <div class="section card">
-      <h2 class="section-title">🗺️ Recorrido</h2>
-      <div class="route-flow">
-        <div class="route-stop">Buenos Aires</div>
-        <div class="route-arrow flight">✈️ →</div>
-        <div class="route-stop">Milán</div>
-        <div class="route-arrow">🚆 →</div>
-        <div class="route-stop">Venecia</div>
-        <div class="route-arrow">🚌 →</div>
-        <div class="route-stop">Pula</div>
-        <div class="route-arrow">🚗 →</div>
-        <div class="route-stop">Liubliana</div>
-        <div class="route-arrow">🚗 →</div>
-        <div class="route-stop">Split</div>
-        <div class="route-arrow">🚗 →</div>
-        <div class="route-stop">Mostar</div>
-        <div class="route-arrow">🚗 →</div>
-        <div class="route-stop">Dubrovnik</div>
-        <div class="route-arrow flight">✈️ →</div>
-        <div class="route-stop">Roma</div>
-        <div class="route-arrow flight">✈️ →</div>
-        <div class="route-stop">Buenos Aires</div>
-      </div>
+      <h2 class="section-title"><span role="img" aria-label="mapa">🗺️</span> Recorrido</h2>
+      <div class="route-flow" id="route-flow"></div>
 
       <a class="maps-btn" href="https://www.google.com/maps/dir/Mil%C3%A1n,+Italia/Venecia,+Italia/Pula,+Croacia/Liubliana,+Eslovenia/Split,+Croacia/Mostar,+Bosnia+y+Herzegovina/Dubrovnik,+Croacia" target="_blank" rel="noopener">
-        📍 Abrir la ruta completa en Google Maps
+        <span role="img" aria-label="ubicación">📍</span> Abrir la ruta completa en Google Maps
       </a>
 
       <div class="map-diagram">
-        <svg viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema del recorrido por Europa">
           <rect width="700" height="480" fill="#eef4fb"/>
           <text x="140" y="90" font-size="15" fill="#b9c6dc" font-weight="700">ITALIA</text>
           <text x="430" y="55" font-size="15" fill="#b9c6dc" font-weight="700">ESLOVENIA</text>
@@ -269,15 +282,12 @@
           <text x="590" y="330" font-size="14" fill="#b9c6dc" font-weight="700">BOSNIA</text>
           <text x="150" y="410" font-size="15" fill="#b9c6dc" font-weight="700">ITALIA</text>
 
-          <!-- ruta en auto/tren/bus -->
           <polyline points="60,115 265,117 364,169 407,60 533,293 622,308 640,371"
             fill="none" stroke="#1a2b4c" stroke-width="3" stroke-dasharray="0"/>
 
-          <!-- vuelo Dubrovnik -> Roma -->
           <line x1="640" y1="371" x2="275" y2="440" stroke="#4285f4" stroke-width="2.5" stroke-dasharray="6,6"/>
           <text x="440" y="420" font-size="20">✈️</text>
 
-          <!-- paradas -->
           <g font-family="Segoe UI, sans-serif">
             <circle cx="60" cy="115" r="8" fill="#1a2b4c"/>
             <text x="60" y="98" font-size="13" font-weight="700" fill="#1a2b4c" text-anchor="middle">Milán</text>
@@ -313,120 +323,175 @@
         <div class="stat-box"><b>1 auto</b><span>Pula → Dubrovnik</span></div>
         <div class="stat-box"><b>1 vuelo</b><span>Dubrovnik → Roma</span></div>
       </div>
-    </div>
 
-    <!-- ITINERARIO DIA A DIA -->
-    <div class="section card">
-      <h2 class="section-title">📅 Día a día</h2>
-      <div class="timeline">
-
-        <div class="tl-item" data-date="2026-10-10" data-tz="America/Argentina/Buenos_Aires" data-city="Buenos Aires">
-          <div class="tl-dot flight"></div>
-          <div class="tl-date">10 de octubre</div>
-          <div class="tl-city">✈️ Salida desde Buenos Aires</div>
-          <div class="tl-detail">ITA Airways, reserva CELO9B · EZE (Ministro Pistarini, Terminal P) 01:30 → Roma Fiumicino (Terminal 3) 19:45 (AZ683) · Escala en Fiumicino 1h15m · Fiumicino (Terminal 1) 21:00 → Milán Linate 22:10 (AZ2058)</div>
+      <div class="weather-box" id="weather-box" hidden>
+        <span class="wtemp" id="weather-temp">—</span>
+        <div>
+          <div id="weather-desc">Cargando clima…</div>
+          <div class="wcity" id="weather-city"></div>
         </div>
-
-        <div class="tl-item" data-date="2026-10-10" data-tz="Europe/Rome" data-city="Milán">
-          <div class="tl-dot"></div>
-          <div class="tl-date">10 de octubre</div>
-          <div class="tl-city">Milán <span class="tl-country">· Italia</span></div>
-          <div class="tl-detail">Airbnb: Via Lazzaro Spellanzani 6</div>
-        </div>
-        <div class="tl-subitem" data-date="2026-10-11" data-tz="Europe/Rome" data-city="Milán"><div class="tl-subdot"></div><span class="tl-subdate">11 de octubre</span></div>
-        <div class="tl-subitem" data-date="2026-10-12" data-tz="Europe/Rome" data-city="Milán"><div class="tl-subdot"></div><span class="tl-subdate">12 de octubre</span></div>
-
-        <div class="tl-item" data-date="2026-10-13" data-tz="Europe/Rome" data-city="Venecia">
-          <div class="tl-dot travel"></div>
-          <div class="tl-date">13 de octubre</div>
-          <div class="tl-city">Venecia <span class="tl-country">· Italia</span></div>
-          <div class="tl-detail">Hotel Rialto, Riva del Ferro 5149</div>
-          <div class="tl-transit">🚆 Tren MIL 09:35 → VEN 12:03 · 2h30m</div>
-        </div>
-
-        <div class="tl-item" data-date="2026-10-14" data-tz="Europe/Zagreb" data-city="Pula">
-          <div class="tl-dot travel"></div>
-          <div class="tl-date">14 de octubre</div>
-          <div class="tl-city">Pula <span class="tl-country">· Croacia</span></div>
-          <div class="tl-detail">Airbnb: Castropola ulica 54, Pula</div>
-          <div class="tl-transit">🚌 FILS Bus VEN 11:00 → PUL 16:00 · 283 km · 5h</div>
-        </div>
-
-        <div class="tl-item" data-date="2026-10-15" data-tz="Europe/Ljubljana" data-city="Liubliana">
-          <div class="tl-dot travel"></div>
-          <div class="tl-date">15 de octubre</div>
-          <div class="tl-city">Liubliana <span class="tl-country">· Eslovenia</span></div>
-          <div class="tl-detail">Retiro del auto: Sixt Pula Estación Autobus, Trg 1. Istarske brigade 1, Pula — 15/10 a las 10:00 (BMW 1 Series automático, 5 asientos, 3 valijas)</div>
-          <div class="tl-transit">🚗 204 km · 2h21m</div>
-        </div>
-        <div class="tl-subitem" data-date="2026-10-16" data-tz="Europe/Ljubljana" data-city="Liubliana"><div class="tl-subdot"></div><span class="tl-subdate">16 de octubre</span></div>
-
-        <div class="tl-item" data-date="2026-10-17" data-tz="Europe/Zagreb" data-city="Split">
-          <div class="tl-dot travel"></div>
-          <div class="tl-date">17 de octubre</div>
-          <div class="tl-city">Split <span class="tl-country">· Croacia</span></div>
-          <div class="tl-detail">Airbnb: Glagoljaška ulica 9, Split</div>
-          <div class="tl-transit">🚗 440 km · 5h desde Liubliana</div>
-        </div>
-        <div class="tl-subitem" data-date="2026-10-18" data-tz="Europe/Zagreb" data-city="Split"><div class="tl-subdot"></div><span class="tl-subdate">18 de octubre</span></div>
-        <div class="tl-subitem" data-date="2026-10-19" data-tz="Europe/Zagreb" data-city="Split"><div class="tl-subdot"></div><span class="tl-subdate">19 de octubre</span></div>
-
-        <div class="tl-item" data-date="2026-10-20" data-tz="Europe/Sarajevo" data-city="Mostar">
-          <div class="tl-dot travel"></div>
-          <div class="tl-date">20 de octubre</div>
-          <div class="tl-city">Mostar <span class="tl-country">· Bosnia y Herzegovina</span></div>
-          <div class="tl-detail">Airbnb: Tenzina 9, Mostar</div>
-          <div class="tl-transit">🚗 169 km · 2h10m desde Split</div>
-        </div>
-
-        <div class="tl-item" data-date="2026-10-21" data-tz="Europe/Zagreb" data-city="Dubrovnik">
-          <div class="tl-dot travel"></div>
-          <div class="tl-date">21 de octubre</div>
-          <div class="tl-city">Dubrovnik <span class="tl-country">· Croacia</span></div>
-          <div class="tl-detail">Devolución del auto: Sixt Dubrovnik / Hotel Rixos, Liechtensteinov Put 3 — 21/10 a las 12:00 (BMW 1 Series confirmado)</div>
-          <div class="tl-transit">🚗 140 km · 2h desde Mostar</div>
-        </div>
-        <div class="tl-subitem" data-date="2026-10-22" data-tz="Europe/Zagreb" data-city="Dubrovnik"><div class="tl-subdot"></div><span class="tl-subdate">22 de octubre</span><span class="tl-subnote">día libre antes del vuelo</span></div>
-
-        <div class="tl-item" data-date="2026-10-22" data-tz="Europe/Zagreb" data-city="Dubrovnik">
-          <div class="tl-dot flight"></div>
-          <div class="tl-date">22 de octubre</div>
-          <div class="tl-city">✈️ Vuelo a Roma</div>
-          <div class="tl-detail">Ryanair FR5974 · DBV → FCO · Salida 22:35 · Llegada 23:55</div>
-        </div>
-
-        <div class="tl-item" data-date="2026-10-23" data-tz="Europe/Rome" data-city="Roma">
-          <div class="tl-dot"></div>
-          <div class="tl-date">23 de octubre</div>
-          <div class="tl-city">Roma <span class="tl-country">· Italia</span></div>
-        </div>
-        <div class="tl-subitem" data-date="2026-10-24" data-tz="Europe/Rome" data-city="Roma"><div class="tl-subdot"></div><span class="tl-subdate">24 de octubre</span></div>
-        <div class="tl-subitem" data-date="2026-10-25" data-tz="Europe/Rome" data-city="Roma"><div class="tl-subdot"></div><span class="tl-subdate">25 de octubre</span><span class="tl-subnote">vuelo de regreso AZ680, 22:40hs (FCO)</span></div>
-
-        <div class="tl-item" data-date="2026-10-26" data-tz="America/Argentina/Buenos_Aires" data-city="Buenos Aires">
-          <div class="tl-dot flight"></div>
-          <div class="tl-date">26 de octubre</div>
-          <div class="tl-city">🏠 Llegada a Buenos Aires</div>
-          <div class="tl-detail">EZE (Ministro Pistarini, Terminal IA) 08:50 · Fin del viaje</div>
-        </div>
-
       </div>
     </div>
 
-    <!-- CODIGOS DE RESERVA -->
     <div class="section card">
-      <h2 class="section-title">🎫 Códigos de reserva</h2>
-      <div class="booking-codes">
-        <div><b>CELO9B</b><span>Vuelo ida y vuelta — ITA Airways (EZE-MIL / FCO-EZE)</span></div>
-        <div><b>FR5974</b><span>Vuelo Dubrovnik → Roma — Ryanair</span></div>
-        <div><b>#9738571427</b><span>Auto Pula → Dubrovnik — Sixt</span></div>
-      </div>
+      <h2 class="section-title"><span role="img" aria-label="calendario">📅</span> Día a día</h2>
+      <div class="timeline" id="timeline"></div>
+    </div>
+
+    <div class="section card">
+      <h2 class="section-title"><span role="img" aria-label="valija">🧳</span> Checklist</h2>
+      <div class="checklist-progress" id="checklist-progress"></div>
+      <ul class="checklist" id="checklist"></ul>
     </div>
 
     <div class="updated-footer">Última actualización: 31 de agosto de 2026</div>
+    <div class="offline-note">Esta página funciona sin conexión una vez que la abriste al menos una vez.</div>
 
   </div>
+
   <script>
+    var CITY_COORDS = {
+      'Milán': [45.4642, 9.1900],
+      'Venecia': [45.4408, 12.3155],
+      'Pula': [44.8666, 13.8496],
+      'Liubliana': [46.0569, 14.5058],
+      'Split': [43.5081, 16.4402],
+      'Mostar': [43.3438, 17.8078],
+      'Dubrovnik': [42.6507, 18.0944],
+      'Roma': [41.9028, 12.4964],
+      'Buenos Aires': [-34.6037, -58.3816]
+    };
+
+    var ROUTE = [
+      {name:'Buenos Aires'}, {arrow:'flight'},
+      {name:'Milán'}, {arrow:'train'},
+      {name:'Venecia'}, {arrow:'bus'},
+      {name:'Pula'}, {arrow:'car'},
+      {name:'Liubliana'}, {arrow:'car'},
+      {name:'Split'}, {arrow:'car'},
+      {name:'Mostar'}, {arrow:'car'},
+      {name:'Dubrovnik'}, {arrow:'flight'},
+      {name:'Roma'}, {arrow:'flight'},
+      {name:'Buenos Aires'}
+    ];
+    var ARROW_ICON = {flight:'✈️', train:'🚆', bus:'🚌', car:'🚗'};
+
+    var DAYS = [
+      {date:'2026-10-10', tz:'America/Argentina/Buenos_Aires', city:'Buenos Aires', type:'flight',
+        title:'Salida desde Buenos Aires',
+        detail:'ITA Airways · EZE (Ministro Pistarini, Terminal A) 01:30 → Roma Fiumicino (Terminal 3) 19:45 · Escala en Fiumicino 1h15m · Fiumicino (Terminal 1) 21:00 → Milán Linate 22:10'},
+      {date:'2026-10-10', tz:'Europe/Rome', city:'Milán', country:'Italia', type:'stay',
+        detail:'Airbnb: Via Lazzaro Spellanzani 6'},
+      {date:'2026-10-11', tz:'Europe/Rome', city:'Milán', sub:true},
+      {date:'2026-10-12', tz:'Europe/Rome', city:'Milán', sub:true},
+      {date:'2026-10-13', tz:'Europe/Rome', city:'Venecia', country:'Italia', type:'travel',
+        detail:'Hotel Rialto, Riva del Ferro 5149', transit:'🚆 Tren MIL 09:35 → VEN 12:03 · 2h30m'},
+      {date:'2026-10-14', tz:'Europe/Zagreb', city:'Pula', country:'Croacia', type:'travel',
+        detail:'Airbnb: Castropola ulica 54, Pula', transit:'🚌 Bus VEN 11:00 → PUL 16:00 · 283 km · 5h'},
+      {date:'2026-10-15', tz:'Europe/Ljubljana', city:'Liubliana', country:'Eslovenia', type:'travel',
+        detail:'Retiro del auto: Sixt Pula Estación Autobus, Trg 1. Istarske brigade 1, Pula — 15/10 a las 10:00 (BMW 1 Series automático, 5 asientos, 3 valijas)',
+        transit:'🚗 204 km · 2h21m'},
+      {date:'2026-10-16', tz:'Europe/Ljubljana', city:'Liubliana', sub:true},
+      {date:'2026-10-17', tz:'Europe/Zagreb', city:'Split', country:'Croacia', type:'travel',
+        detail:'Airbnb: Glagoljaška ulica 9, Split', transit:'🚗 440 km · 5h desde Liubliana'},
+      {date:'2026-10-18', tz:'Europe/Zagreb', city:'Split', sub:true},
+      {date:'2026-10-19', tz:'Europe/Zagreb', city:'Split', sub:true},
+      {date:'2026-10-20', tz:'Europe/Sarajevo', city:'Mostar', country:'Bosnia y Herzegovina', type:'travel',
+        detail:'Airbnb: Tenzina 9, Mostar', transit:'🚗 169 km · 2h10m desde Split'},
+      {date:'2026-10-21', tz:'Europe/Zagreb', city:'Dubrovnik', country:'Croacia', type:'travel',
+        detail:'Devolución del auto: Sixt Dubrovnik / Hotel Rixos, Liechtensteinov Put 3 — 21/10 a las 12:00 (BMW 1 Series)',
+        transit:'🚗 140 km · 2h desde Mostar'},
+      {date:'2026-10-22', tz:'Europe/Zagreb', city:'Dubrovnik', sub:true, note:'día libre antes del vuelo'},
+      {date:'2026-10-22', tz:'Europe/Zagreb', city:'Dubrovnik', type:'flight',
+        title:'Vuelo a Roma', detail:'Ryanair · DBV → FCO · Salida 22:35 · Llegada 23:55'},
+      {date:'2026-10-23', tz:'Europe/Rome', city:'Roma', country:'Italia', type:'stay'},
+      {date:'2026-10-24', tz:'Europe/Rome', city:'Roma', sub:true},
+      {date:'2026-10-25', tz:'Europe/Rome', city:'Roma', sub:true, note:'vuelo de regreso 22:40hs (FCO)'},
+      {date:'2026-10-26', tz:'America/Argentina/Buenos_Aires', city:'Buenos Aires', type:'flight',
+        title:'Llegada a Buenos Aires', detail:'EZE (Ministro Pistarini, Terminal A) 08:50 · Fin del viaje'}
+    ];
+
+    var CHECKLIST_ITEMS = [
+      'Pasaportes (vigencia mínima 6 meses)',
+      'Impresión/PDF de vuelos y reservas',
+      'Seguro de viaje',
+      'Licencia de conducir internacional',
+      'Adaptador de enchufe europeo',
+      'Tarjeta / efectivo en euros',
+      'Ropa de abrigo (octubre en los Balcanes)',
+      'Cargador y power bank',
+      'Botiquín básico'
+    ];
+
+    var routeFlow = document.getElementById('route-flow');
+    ROUTE.forEach(function(step){
+      var el = document.createElement('div');
+      if (step.arrow) {
+        el.className = 'route-arrow' + (step.arrow === 'flight' ? ' flight' : '');
+        el.innerHTML = '<span role="img" aria-label="' + step.arrow + '">' + ARROW_ICON[step.arrow] + '</span> →';
+      } else {
+        el.className = 'route-stop';
+        el.textContent = step.name;
+      }
+      routeFlow.appendChild(el);
+    });
+
+    var timelineEl = document.getElementById('timeline');
+    var monthNames = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    function formatDate(iso){
+      var parts = iso.split('-');
+      return parseInt(parts[2],10) + ' de ' + monthNames[parseInt(parts[1],10)-1];
+    }
+
+    DAYS.forEach(function(d){
+      var item = document.createElement('div');
+      if (d.sub) {
+        item.className = 'tl-subitem';
+        item.dataset.date = d.date; item.dataset.tz = d.tz; item.dataset.city = d.city;
+        item.innerHTML = '<div class="tl-subdot"></div><span class="tl-subdate">' + formatDate(d.date) + '</span>' +
+          (d.note ? '<span class="tl-subnote">' + d.note + '</span>' : '');
+      } else {
+        item.className = 'tl-item';
+        item.dataset.date = d.date; item.dataset.tz = d.tz; item.dataset.city = d.city;
+        var dotClass = d.type === 'flight' ? 'flight' : (d.type === 'travel' ? 'travel' : '');
+        var cityLine = d.title ? d.title : (d.city + (d.country ? ' <span class="tl-country">· ' + d.country + '</span>' : ''));
+        item.innerHTML =
+          '<div class="tl-dot ' + dotClass + '"></div>' +
+          '<div class="tl-date">' + formatDate(d.date) + '</div>' +
+          '<div class="tl-city">' + cityLine + '</div>' +
+          (d.detail ? '<div class="tl-detail">' + d.detail + '</div>' : '') +
+          (d.transit ? '<div class="tl-transit' + (d.type==='flight' ? ' flight-tag' : '') + '">' + d.transit + '</div>' : '');
+      }
+      timelineEl.appendChild(item);
+    });
+
+    var checklistEl = document.getElementById('checklist');
+    var progressEl = document.getElementById('checklist-progress');
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem('viaje-checklist') || '{}'); } catch(e) {}
+
+    function updateProgress(){
+      var boxes = checklistEl.querySelectorAll('input');
+      var done = 0;
+      boxes.forEach(function(b){ if (b.checked) done++; });
+      progressEl.textContent = done + ' de ' + boxes.length + ' listo';
+    }
+
+    CHECKLIST_ITEMS.forEach(function(text, i){
+      var li = document.createElement('li');
+      var id = 'chk-' + i;
+      var checked = !!saved[id];
+      li.innerHTML = '<input type="checkbox" id="' + id + '"' + (checked ? ' checked' : '') + '>' +
+        '<label for="' + id + '">' + text + '</label>';
+      checklistEl.appendChild(li);
+      li.querySelector('input').addEventListener('change', function(e){
+        saved[id] = e.target.checked;
+        try { localStorage.setItem('viaje-checklist', JSON.stringify(saved)); } catch(err) {}
+        updateProgress();
+      });
+    });
+    updateProgress();
+
     (function(){
       var now = new Date();
       var y = now.getFullYear(), m = String(now.getMonth()+1).padStart(2,'0'), d = String(now.getDate()).padStart(2,'0');
@@ -445,9 +510,8 @@
         if (el.dataset.tz) { todayTz = el.dataset.tz; todayCity = el.dataset.city; }
       });
 
-      // Contador de días / día X de 16
-      var tripStart = new Date(2026, 9, 10); // 10 de octubre (mes 0-indexado)
-      var tripEnd = new Date(2026, 9, 25);   // último día "en Europa", 25 de octubre
+      var tripStart = new Date(2026, 9, 10);
+      var tripEnd = new Date(2026, 9, 25);
       var todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       var msPerDay = 86400000;
       var counterEl = document.getElementById('day-counter');
@@ -466,7 +530,6 @@
         labelEl.textContent = '¡Viaje completado!';
       }
 
-      // Reloj en vivo del lugar donde están hoy (o Buenos Aires si el viaje no empezó/terminó)
       var clockEl = document.getElementById('live-clock');
       var clockLabelEl = document.getElementById('live-clock-label');
       function updateClock(){
@@ -482,7 +545,28 @@
       }
       updateClock();
       setInterval(updateClock, 30000);
+
+      var coords = CITY_COORDS[todayCity];
+      if (coords && navigator.onLine !== false) {
+        var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + coords[0] +
+          '&longitude=' + coords[1] + '&current_weather=true';
+        fetch(url).then(function(r){ return r.json(); }).then(function(data){
+          if (data && data.current_weather) {
+            var box = document.getElementById('weather-box');
+            box.hidden = false;
+            document.getElementById('weather-temp').textContent = Math.round(data.current_weather.temperature) + '°C';
+            document.getElementById('weather-desc').textContent = 'Clima actual';
+            document.getElementById('weather-city').textContent = 'en ' + todayCity;
+          }
+        }).catch(function(){ /* sin conexión: se ignora silenciosamente */ });
+      }
     })();
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function(){
+        navigator.serviceWorker.register('sw.js').catch(function(){});
+      });
+    }
   </script>
 </body>
 </html>
