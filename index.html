@@ -179,6 +179,8 @@
   .tl-date{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-transform:uppercase;}
   .tl-city{font-size:16.5px;font-weight:700;color:var(--navy);margin:2px 0 4px;}
   .tl-detail{font-size:13.5px;color:var(--text);}
+  .addr-link{color:inherit;text-decoration:none;border-bottom:1px dotted var(--muted);}
+  .addr-link:active{color:var(--navy);}
   .tl-transit{display:inline-block;margin-top:6px;font-size:12px;background:#f0f4fa;color:var(--navy-light);padding:3px 10px;border-radius:6px;font-weight:600;}
   .tl-transit.flight-tag{background:#e8f0fe;color:#1a56db;}
 
@@ -334,26 +336,33 @@
         title:'Salida desde Buenos Aires',
         detail:'ITA Airways · EZE (Ministro Pistarini, Terminal A) 01:30 → Roma Fiumicino (Terminal 3) 19:45 · Escala en Fiumicino 1h15m · Fiumicino (Terminal 1) 21:00 → Milán Linate 22:10'},
       {date:'2026-10-10', tz:'Europe/Rome', city:'Milán', country:'Italia', type:'stay',
-        detail:'Airbnb: Via Lazzaro Spellanzani 6'},
+        detail:'Airbnb: Via Lazzaro Spellanzani 6',
+        address:'Via Lazzaro Spellanzani 6', addressQuery:'Via Lazzaro Spellanzani 6, Milano, Italia'},
       {date:'2026-10-11', tz:'Europe/Rome', city:'Milán', sub:true},
       {date:'2026-10-12', tz:'Europe/Rome', city:'Milán', sub:true},
       {date:'2026-10-13', tz:'Europe/Rome', city:'Venecia', country:'Italia', type:'travel',
-        detail:'Hotel Rialto, Riva del Ferro 5149', transit:'🚆 Tren MIL 09:35 → VEN 12:03 · 2h30m'},
+        detail:'Hotel Rialto, Riva del Ferro 5149', transit:'🚆 Tren MIL 09:35 → VEN 12:03 · 2h30m',
+        address:'Hotel Rialto, Riva del Ferro 5149', addressQuery:'Hotel Rialto, Riva del Ferro 5149, Venezia, Italia'},
       {date:'2026-10-14', tz:'Europe/Zagreb', city:'Pula', country:'Croacia', type:'travel',
-        detail:'Airbnb: Castropola ulica 54, Pula', transit:'🚌 Bus VEN 11:00 → PUL 16:00 · 283 km · 5h'},
+        detail:'Airbnb: Castropola ulica 54, Pula', transit:'🚌 Bus VEN 11:00 → PUL 16:00 · 283 km · 5h',
+        address:'Castropola ulica 54, Pula', addressQuery:'Castropola ulica 54, Pula, Croacia'},
       {date:'2026-10-15', tz:'Europe/Ljubljana', city:'Liubliana', country:'Eslovenia', type:'travel',
         detail:'Retiro del auto: Sixt Pula Estación Autobus, Trg 1. Istarske brigade 1, Pula — 15/10 a las 10:00 (BMW 1 Series automático, 5 asientos, 3 valijas)',
-        transit:'🚗 204 km · 2h21m'},
+        transit:'🚗 204 km · 2h21m',
+        address:'Trg 1. Istarske brigade 1, Pula', addressQuery:'Sixt Pula Estacion Autobus, Trg 1. Istarske brigade 1, Pula, Croacia'},
       {date:'2026-10-16', tz:'Europe/Ljubljana', city:'Liubliana', sub:true},
       {date:'2026-10-17', tz:'Europe/Zagreb', city:'Split', country:'Croacia', type:'travel',
-        detail:'Airbnb: Glagoljaška ulica 9, Split', transit:'🚗 440 km · 5h desde Liubliana'},
+        detail:'Airbnb: Glagoljaška ulica 9, Split', transit:'🚗 440 km · 5h desde Liubliana',
+        address:'Glagoljaška ulica 9, Split', addressQuery:'Glagoljaska ulica 9, Split, Croacia'},
       {date:'2026-10-18', tz:'Europe/Zagreb', city:'Split', sub:true},
       {date:'2026-10-19', tz:'Europe/Zagreb', city:'Split', sub:true},
       {date:'2026-10-20', tz:'Europe/Sarajevo', city:'Mostar', country:'Bosnia y Herzegovina', type:'travel',
-        detail:'Airbnb: Tenzina 9, Mostar', transit:'🚗 169 km · 2h10m desde Split'},
+        detail:'Airbnb: Tenzina 9, Mostar', transit:'🚗 169 km · 2h10m desde Split',
+        address:'Tenzina 9, Mostar', addressQuery:'Tenzina 9, Mostar, Bosnia y Herzegovina'},
       {date:'2026-10-21', tz:'Europe/Zagreb', city:'Dubrovnik', country:'Croacia', type:'travel',
         detail:'Devolución del auto: Sixt Dubrovnik / Hotel Rixos, Liechtensteinov Put 3 — 21/10 a las 12:00 (BMW 1 Series)',
-        transit:'🚗 140 km · 2h desde Mostar'},
+        transit:'🚗 140 km · 2h desde Mostar',
+        address:'Liechtensteinov Put 3, Dubrovnik', addressQuery:'Hotel Rixos Libertas, Liechtensteinov Put 3, Dubrovnik, Croacia'},
       {date:'2026-10-22', tz:'Europe/Zagreb', city:'Dubrovnik', sub:true, note:'día libre antes del vuelo'},
       {date:'2026-10-22', tz:'Europe/Zagreb', city:'Dubrovnik', type:'flight',
         title:'Vuelo a Roma', detail:'Ryanair · DBV → FCO · Salida 22:35 · Llegada 23:55'},
@@ -466,11 +475,17 @@
         item.dataset.date = d.date; item.dataset.tz = d.tz; item.dataset.city = d.city;
         var dotClass = d.type === 'flight' ? 'flight' : (d.type === 'travel' ? 'travel' : '');
         var cityLine = d.title ? d.title : (d.city + (d.country ? ' <span class="tl-country">· ' + d.country + '</span>' : ''));
+        var detailHtml = d.detail || '';
+        if (d.address && detailHtml.indexOf(d.address) !== -1) {
+          var mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(d.addressQuery || d.address);
+          var linkHtml = '<a class="addr-link" href="' + mapUrl + '" target="_blank" rel="noopener">' + d.address + ' <span aria-hidden="true">📍</span></a>';
+          detailHtml = detailHtml.split(d.address).join(linkHtml);
+        }
         item.innerHTML =
           '<div class="tl-dot ' + dotClass + '"></div>' +
           '<div class="tl-date">' + formatDate(d.date) + '</div>' +
           '<div class="tl-city">' + cityLine + '</div>' +
-          (d.detail ? '<div class="tl-detail">' + d.detail + '</div>' : '') +
+          (detailHtml ? '<div class="tl-detail">' + detailHtml + '</div>' : '') +
           (d.transit ? '<div class="tl-transit' + (d.type==='flight' ? ' flight-tag' : '') + '">' + d.transit + '</div>' : '');
       }
       timelineEl.appendChild(item);
