@@ -192,21 +192,6 @@
     vertical-align:middle;
   }
 
-  .checklist{list-style:none;margin:0;padding:0;}
-  .checklist li{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:9px 4px;
-    border-bottom:1px solid var(--border);
-    font-size:14px;
-  }
-  .checklist li:last-child{border-bottom:none;}
-  .checklist input{width:18px;height:18px;accent-color:var(--navy);flex:none;}
-  .checklist label{cursor:pointer;flex:1;}
-  .checklist input:checked + label{color:var(--muted);text-decoration:line-through;}
-  .checklist-progress{font-size:12px;color:var(--muted);margin-bottom:12px;}
-
   .updated-footer{
     text-align:center;
     font-size:12px;
@@ -289,12 +274,6 @@
       <div class="timeline" id="timeline"></div>
     </div>
 
-    <div class="section card">
-      <h2 class="section-title"><span role="img" aria-label="valija">🧳</span> Checklist</h2>
-      <div class="checklist-progress" id="checklist-progress"></div>
-      <ul class="checklist" id="checklist"></ul>
-    </div>
-
     <div class="updated-footer">Última actualización: 31 de agosto de 2026</div>
     <div class="offline-note">Esta página funciona sin conexión una vez que la abriste al menos una vez.</div>
 
@@ -361,18 +340,6 @@
       {date:'2026-10-25', tz:'Europe/Rome', city:'Roma', sub:true, note:'vuelo de regreso 22:40hs (FCO)'},
       {date:'2026-10-26', tz:'America/Argentina/Buenos_Aires', city:'Buenos Aires', type:'flight',
         title:'Llegada a Buenos Aires', detail:'EZE (Ministro Pistarini, Terminal A) 08:50 · Fin del viaje'}
-    ];
-
-    var CHECKLIST_ITEMS = [
-      'Pasaportes (vigencia mínima 6 meses)',
-      'Impresión/PDF de vuelos y reservas',
-      'Seguro de viaje',
-      'Licencia de conducir internacional',
-      'Adaptador de enchufe europeo',
-      'Tarjeta / efectivo en euros',
-      'Ropa de abrigo (octubre en los Balcanes)',
-      'Cargador y power bank',
-      'Botiquín básico'
     ];
 
     var routeFlow = document.getElementById('route-flow');
@@ -442,33 +409,6 @@
       }
       timelineEl.appendChild(item);
     });
-
-    var checklistEl = document.getElementById('checklist');
-    var progressEl = document.getElementById('checklist-progress');
-    var saved = {};
-    try { saved = JSON.parse(localStorage.getItem('viaje-checklist') || '{}'); } catch(e) {}
-
-    function updateProgress(){
-      var boxes = checklistEl.querySelectorAll('input');
-      var done = 0;
-      boxes.forEach(function(b){ if (b.checked) done++; });
-      progressEl.textContent = done + ' de ' + boxes.length + ' listo';
-    }
-
-    CHECKLIST_ITEMS.forEach(function(text, i){
-      var li = document.createElement('li');
-      var id = 'chk-' + i;
-      var checked = !!saved[id];
-      li.innerHTML = '<input type="checkbox" id="' + id + '"' + (checked ? ' checked' : '') + '>' +
-        '<label for="' + id + '">' + text + '</label>';
-      checklistEl.appendChild(li);
-      li.querySelector('input').addEventListener('change', function(e){
-        saved[id] = e.target.checked;
-        try { localStorage.setItem('viaje-checklist', JSON.stringify(saved)); } catch(err) {}
-        updateProgress();
-      });
-    });
-    updateProgress();
 
     (function(){
       var now = new Date();
