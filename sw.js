@@ -1,4 +1,4 @@
-const CACHE_NAME = 'viaje-europa-26-v1';
+const CACHE_NAME = 'viaje-europa-26-v2';
 const ASSETS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', function(event){
@@ -18,19 +18,20 @@ self.addEventListener('activate', function(event){
 });
 
 self.addEventListener('fetch', function(event){
-  // Clima: siempre red primero (dato en vivo), sin romper si falla
+  // Clima: siempre red, sin cachear
   if (event.request.url.indexOf('open-meteo.com') !== -1) {
     event.respondWith(fetch(event.request).catch(function(){ return new Response('{}', {headers:{'Content-Type':'application/json'}}); }));
     return;
   }
+  // Todo lo demás (HTML, manifest): red primero para traer siempre lo último,
+  // y si no hay conexión, se usa lo último que quedó guardado en caché.
   event.respondWith(
-    caches.match(event.request).then(function(cached){
-      return cached || fetch(event.request).then(function(response){
-        return caches.open(CACHE_NAME).then(function(cache){
-          cache.put(event.request, response.clone());
-          return response;
-        });
-      }).catch(function(){ return cached; });
+    fetch(event.request).then(function(response){
+      var copy = response.clone();
+      caches.open(CACHE_NAME).then(function(cache){ cache.put(event.request, copy); });
+      return response;
+    }).catch(function(){
+      return caches.match(event.request);
     })
   );
 });
