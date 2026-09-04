@@ -347,9 +347,12 @@
         detail:'Airbnb: Castropola ulica 54, Pula', transit:'🚌 Bus VEN 11:00 → PUL 16:00 · 283 km · 5h',
         address:'Castropola ulica 54, Pula', addressQuery:'Castropola ulica 54, Pula, Croacia'},
       {date:'2026-10-15', tz:'Europe/Ljubljana', city:'Liubliana', country:'Eslovenia', type:'travel',
-        detail:'Retiro del auto: Sixt Pula Estación Autobus, Trg 1. Istarske brigade 1, Pula — 15/10 a las 10:00 (BMW 1 Series automático, 5 asientos, 3 valijas)',
+        detail:'Retiro del auto: Sixt Pula Estación Autobus, Trg 1. Istarske brigade 1, Pula — 15/10 a las 10:00 (BMW 1 Series automático, 5 asientos, 3 valijas). Alojamiento: Trubarjeva cesta 81, Liubliana',
         transit:'🚗 204 km · 2h21m',
-        address:'Trg 1. Istarske brigade 1, Pula', addressQuery:'Sixt Pula Estacion Autobus, Trg 1. Istarske brigade 1, Pula, Croacia'},
+        addresses:[
+          {text:'Trg 1. Istarske brigade 1, Pula', query:'Sixt Pula Estacion Autobus, Trg 1. Istarske brigade 1, Pula, Croacia'},
+          {text:'Trubarjeva cesta 81, Liubliana', query:'Trubarjeva cesta 81, Ljubljana, Eslovenia'}
+        ]},
       {date:'2026-10-16', tz:'Europe/Ljubljana', city:'Liubliana', sub:true},
       {date:'2026-10-17', tz:'Europe/Zagreb', city:'Split', country:'Croacia', type:'travel',
         detail:'Airbnb: Glagoljaška ulica 9, Split', transit:'🚗 440 km · 5h desde Liubliana',
@@ -478,11 +481,14 @@
         var dotClass = d.type === 'flight' ? 'flight' : (d.type === 'travel' ? 'travel' : '');
         var cityLine = d.title ? d.title : (d.city + (d.country ? ' <span class="tl-country">· ' + d.country + '</span>' : ''));
         var detailHtml = d.detail || '';
-        if (d.address && detailHtml.indexOf(d.address) !== -1) {
-          var mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(d.addressQuery || d.address);
-          var linkHtml = '<a class="addr-link" href="' + mapUrl + '" target="_blank" rel="noopener">' + d.address + ' <span aria-hidden="true">📍</span></a>';
-          detailHtml = detailHtml.split(d.address).join(linkHtml);
-        }
+        var addrList = d.addresses || (d.address ? [{text:d.address, query:d.addressQuery}] : []);
+        addrList.forEach(function(a){
+          if (detailHtml.indexOf(a.text) !== -1) {
+            var mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(a.query || a.text);
+            var linkHtml = '<a class="addr-link" href="' + mapUrl + '" target="_blank" rel="noopener">' + a.text + ' <span aria-hidden="true">📍</span></a>';
+            detailHtml = detailHtml.split(a.text).join(linkHtml);
+          }
+        });
         item.innerHTML =
           '<div class="tl-dot ' + dotClass + '"></div>' +
           '<div class="tl-date">' + formatDate(d.date) + '</div>' +
